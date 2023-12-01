@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>My test page</title>
+  </head>
+  <body>
+    <p>This is my page</p>
+
+<!-- <form action='logout/' method="POST">
+		{% csrf_token %}
+      	<input type="submit" value="Logout"/>
+     </form> -->
+
+
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+        <li><a href="{% url 'polls:detail' question.id|safe %}">{{ question.question_text }}</a></li>
+<form action='delete/' method="POST">
+	<!--  {% csrf_token %} -->
+	<input type="hidden" name="id" value="{{ question.id|safe }}" />
+	<input type="submit" value="Delete question"/>
+</form>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+
+  </body>
+</html>
+

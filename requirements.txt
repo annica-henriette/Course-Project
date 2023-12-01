@@ -1,0 +1,4 @@
+Django==3.2.12
+requests==2.26.0
+
+# Django==3.2.13 or Django==4.2.7
