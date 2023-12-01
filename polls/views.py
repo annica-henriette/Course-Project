@@ -43,7 +43,7 @@ def vote(request, question_id):
        
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
-@login_required
+# @login_required
 def deleteView(request):
     q = Question.objects.get(pk=request.POST.get('id'))
     q.delete()
