@@ -52,7 +52,7 @@ def deleteView(request, item_id):
 
     # if request.user == question.owner:
         # question.delete()
-        # return redirect('/')
+        # return redirect('/polls')
     # else:
         # return HttpResponse("You are not the owner of this question.")
 	
