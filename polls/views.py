@@ -45,7 +45,7 @@ def vote(request, question_id):
 
 # @login_required
 def deleteView(request, item_id):
-    questions = Question.objects.raw(f"SELECT * FROM questions WHERE id={item_id};")
+    questions = Question.objects.raw(f"SELECT * FROM polls_question WHERE id={item_id};")
     for q in questions:
         q.delete()
     return redirect("/polls")

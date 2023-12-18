@@ -17,11 +17,11 @@
     <ul>
     {% for question in latest_question_list %}
         <li><a href="{% url 'polls:detail' question.id|safe %}">{{ question.question_text }}</a></li>
-<form action='delete/' method="POST">
-	<!--  {% csrf_token %} -->
-	<input type="hidden" name="id" value="{{ question.id|safe }}" />
-	<input type="submit" value="Delete question"/>
-</form>
+        <form action="{% url 'polls:delete' question.id %}" method="POST">
+          {% csrf_token %} 
+          <input type="hidden" name="id" value="{{ question.id|safe }}" />
+          <input type="submit" value="Delete question"/>
+      </form>      
     {% endfor %}
     </ul>
 {% else %}
