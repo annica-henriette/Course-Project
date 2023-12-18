@@ -69,12 +69,12 @@ def deleteView(request, item_id):
 def questionText(request, question_id):
     question = get_object_or_404(Question, pk=question_id, owner=request.user)
 
-    if request.method == 'POST':
-        new_question = request.POST.get('new_question')
-        question.question_text = new_question
-        question.save()
-        return redirect('polls:index')
-    else:
-        return render(request, 'polls/new_question_text.html', {'question': question})
+    # if request.method == 'POST':
+    new_question = request.POST.get('new_question')
+    question.question_text = new_question
+    question.save()
+    return redirect('polls:index')
+    # else:
+        # return render(request, 'polls/new_question_text.html', {'question': question})
 	
 	    
