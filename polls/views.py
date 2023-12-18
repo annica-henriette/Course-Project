@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 
 from .models import Choice, Question
 
-
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
@@ -17,16 +16,15 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Question.objects.order_by('-pub_date')[:5]
 
-
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
-
 
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
+# @login_required
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
@@ -43,7 +41,7 @@ def vote(request, question_id):
        
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
-@login_required
+# @login_required
 def deleteView(request, item_id):
     questions = Question.objects.raw(f"SELECT * FROM polls_question WHERE id={item_id};")
     for q in questions:
