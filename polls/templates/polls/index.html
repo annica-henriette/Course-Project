@@ -16,7 +16,8 @@
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id|safe %}">{{ question.question_text }}</a></li>     
+        <li><a href="{% url 'polls:detail' question.id|safe %}">{{ question.question_text }}</a></li>   
+        {{ question.choices }} choices for question: {{ question.question_text }}  
     {% endfor %}
     </ul>
 {% else %}

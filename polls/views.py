@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.db.models import Count
 
 from .models import Choice, Question
 
@@ -15,7 +16,8 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+        queryset = Question.objects.annotate(choices=Count('choice'))
+        return queryset.order_by('-pub_date')[:5]
 
 class DetailView(generic.DetailView):
     model = Question
