@@ -44,11 +44,13 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 # @login_required
-def deleteView(request):
-    q = Question.objects.get(pk=request.POST.get('id'))
-    q.delete()
-    return redirect('/')
+def deleteView(request, item_id):
+    questions = Question.objects.raw(f"SELECT * FROM questions WHERE id={item_id};")
+    for q in questions:
+        q.delete()
+    return redirect("/polls")
     # if request.user == q.owner:
+        # q = Question.objects.get(pk=request.POST.get('id'))
         # q.delete()
         # return redirect('/')
     # else:
