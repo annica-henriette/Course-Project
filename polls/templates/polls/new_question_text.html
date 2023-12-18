@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>Change Question Text</h2>
+    <form method="post" action="{% url 'polls:question_text' question.id %}">
+        {% csrf_token %}
+        <label for="new_question">New question text:</label>
+        <input type="text" name="new_question" value="{{ question.question_text }}" required>
+        <button type="submit">Change</button>
+    </form>
+</body>
+</html>

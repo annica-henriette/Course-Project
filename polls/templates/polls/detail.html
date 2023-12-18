@@ -11,7 +11,7 @@
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
     <form action="{% url 'polls:vote' question.id %}" method="post">
-    <!-- {% csrf_token %} -->
+      {% csrf_token %} 
     {% for choice in question.choice_set.all %}
         <input type="radio" name="choice" id="choice{{ forloop.counter }}"       value="{{ choice.id }}">
         <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
@@ -20,10 +20,17 @@
     </form>
 
     <form action="{% url 'polls:delete' question.id|safe %}" method="POST">
-    <!-- {% csrf_token %} -->
+      {% csrf_token %}
       <input type="hidden" name="id" value="{{ question.id|safe }}" />
       <input type="submit" value="Delete question"/>
-  </form> 
+    </form> 
+
+    <form action="{% url 'polls:question_text' question_id=question.id %}" method="post">
+      {% csrf_token %}
+      <label for="new_question">New question:</label>
+      <input type="text" name="new_question" value="{{ question.question_text }}" required>
+      <input type="submit" value="Change">
+    </form>
 
     <a href="{% url 'polls:index' %}">Back</a>
 

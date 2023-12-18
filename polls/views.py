@@ -5,6 +5,7 @@ from django.views import generic
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 
 from .models import Choice, Question
 
@@ -24,7 +25,9 @@ class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
+# @csrf_protect
 # @login_required
+@csrf_exempt
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
@@ -41,7 +44,9 @@ def vote(request, question_id):
        
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
+# @csrf_protect
 # @login_required
+@csrf_exempt
 def deleteView(request, item_id):
     questions = Question.objects.raw(f"SELECT * FROM polls_question WHERE id={item_id};")
     for q in questions:
@@ -55,5 +60,19 @@ def deleteView(request, item_id):
         # return redirect('/polls')
     # else:
         # return HttpResponse("You are not the owner of this question.")
+
+# @csrf_protect
+# @login_required
+@csrf_exempt
+def questionText(request, question_id):
+    question = get_object_or_404(Question, pk=question_id, owner=request.user)
+
+    if request.method == 'POST':
+        new_question = request.POST.get('new_question')
+        question.question_text = new_question
+        question.save()
+        return redirect('polls:index')
+    else:
+        return render(request, 'polls/new_question_text.html', {'question': question})
 	
 	    
